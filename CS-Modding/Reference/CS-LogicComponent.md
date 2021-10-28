@@ -2,29 +2,34 @@
 This is the file your component extends to do logic.  
 All code examples in this assume you are in a class that extends this
 
-## Fields
-Name | Description
-:-- | :--
-`IComponentInWorld {get;}` | Returns the `ComponentDataManager` of the component.
-`ComponentAddress {get; set;}` | Returns the [*`Address`*]()
+## Properties
+Name | Type | Description
+:-- | :-- | :--
+`Component` | `IComponentInWorld {get;}` | Returns the `ComponentDataManager` of the component.
+`Address` | `ComponentAddress {get; set;}` | Returns the `Address` of the component.
+`Inputs` | `IReadOnlyList<InputPeg> {get;}` | This contains a list of the states of the `InputPegs` of the component.
 
-## Components
-### `IComponentInWorld {get;}`
-This returns the ComponentDataManager of the component.
+### `Component`
+Returns `IComponentInWorld {get;}`
 
-## Address
-### `ComponentAddress {get; set;}`
-This contains the address of the component
+This returns the [`IComponentInWorld`](CS-ComponentDataManager.md) of the component.
 
-## Inputs
-### `IReadOnlyList<InputPeg> {get;}`
-[Input Pegs](CS-InputPeg.md)  
+### `Address`
+Returns `ComponentAddress {get; set;}`
 
-This contains a list of the states of the input pegs of the component  
+This contains the [`Address`](CS-ComponentAddress.md) of the component
+
+### `Inputs[...]`
+Returns `IReadOnlyList<InputPeg> {get;}`
+
+This contains a list of the states of the [`Input Pegs`](CS-InputPeg.md) of the component.  
 To check if a peg is on or not use
 `base.Inputs[PEG].On`.
 
-## Outputs
+---
+# Still needs work
+
+
 ### `IReadOnlyList<OutputPeg> {get;}`
 This contains a list of the states of the output pegs of the component. To check if a peg is on or not use `base.Outputs[PEG].On`. likewise to turn a peg on/off use `base.Outputs[PEG].On = true/false`.
 ##### Note: Outputs maintain state until changed i.e. they stay on until you turn them off

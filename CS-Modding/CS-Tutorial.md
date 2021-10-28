@@ -139,7 +139,7 @@ This is where your component logic goes. It can contain other code too, and you 
 
 If you want to use the full capabilities of of the component system (inputs, outputs, updating logic each server tick etc.) your component should extend LogicComponent from LogicWorld.Server.Circuitry.
 
-Here is an example 
+Here is an example:
 ```cs
 using LogicWorld.Server.Circuitry;
 
