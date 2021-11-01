@@ -62,3 +62,27 @@ if (currentIn != previousIn) {
 }
 ```
 ## Keywords
+### Prerequisites
+When refering to the states of pegs it is recommended to use:
+`HIGH` for 1, On, Red, Active.
+`LOW` for 0, Off, Black, Inactive.
+
+### `out`
+The `out` keyword allows you to set the output pins either `HIGH` or `LOW`.
+
+### `mem`
+The `mem` keyword is a way to store persistent data between ticks of execution.
+`mem` has a capacity of 256 Bits. The capacity is a factor to be careful about.
+
+Here is a simple script that:
+* Saves a bit on `CLK` `HIGH`.
+* Outputs the Bit on `CLK` `LOW`.
+```lsx
+if in[0]
+  mem[0] = in[1]
+end
+
+if !in[0]
+  out[0] = mem[0]
+end
+```
