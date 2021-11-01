@@ -1,6 +1,6 @@
 # Logic Script - Reference
 ## Contents
-* [Control Statements](#control_statements)
+* [Control Statements](#control-statements)
 * [Keywords](#keywords)
 
 ## Control Statements
