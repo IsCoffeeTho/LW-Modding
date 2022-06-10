@@ -107,7 +107,7 @@ namespace exampleID
 ```
 
 This example simply sets the single output to the single input each time the component is updated by 
-More info on [LogicComponent](CS-LogicComponent.md).
+More info on [LogicComponent](Reference/CS-LogicComponent.md).
 
 > ### **NOTE**
 > Anything used in code referenced using logicCode in your succ file **MUST** be in here, the rest will not be loaded by the time the component types are compiled. You'll have to use reflection for anything external (so probably just accept the big file). You should prefix the filename with the same name as the mod folder so it's easier to find and delete when removing the mod
