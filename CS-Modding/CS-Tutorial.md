@@ -1,47 +1,69 @@
 # LW - C\# Modding
+### Introduction
+> ### NOTE
+> This is still being worked on, if there is any issues or problems with the guide
+> please do bring it up in an issue or make a pull request with the changes.
+___
+### File Structure
 
-## Mods
-For each mod you would want files to store that additions you want to make to the game.  
-A usual structure looks like:
+There are two folders required. A mod loader, and the mod itself. The full structure looks like this. Individual elements will be explained further later.
 ```
-Logic World/GameData
-    - <mod>/
-        - components/
-            - <component>.succ
-        - src/
-            - server/
-                - <loader>.cs
-                - <modname-component>.cs
-        - manifest.succ
-        - ignore #optional
+Logic World/GameData/
+└── <mod>/
+    ├── components/
+    │   └── <component-group>.succ
+    ├── src/
+    │   └── server/
+    │       ├── ServerMod.cs
+    │       └── <component script>.cs   #optional
+    ├── manifest.succ
+    └── ignore #optional
 ```
+```cs
+// ServerMod.cs
+using LogicAPI.Server;
+using LogicLog;
 
-### `<mod>/manifest.succ`
-
-This is information about your mod. It is what will be shown in the mod list in-game, and the ID is prefixed to components in the item menu so it's best to keep it short. It doesn't have to be unique, so if you want to make multiple mods it will keep your things together (think of it as a namespace).
+public class Loader : ServerMod
+{
+    protected override void Initialize()
+	{
+        Logger.Info("Mod loaded");
+    }
+}
+```
 ```js
+# manifest.succ
+
 ID: exampleID
 Name: exampleName
 Author: exampleAuthor
-Version: 0.0.0
+Version: 1.0
 Priority: 1
 ```
 
 ![Loaded Mods Menu](https://user-images.githubusercontent.com/7610940/138955141-7165ec2f-a975-42ad-919c-c91c15ebc615.png)
 
-### `<mod>/components/<component>.succ`
+> ### **NOTE**
+> The SUCC format requires that the tabulature of property is four spaces (`U+0020`).
+> Tabs (`U+0009`) will not work
 
-This is what defines your component as a placeable item in-game. See the examples in `Logic World/GameData/MHG/Components` or https://docs.logicworld.net/articles/component-reference.html
+___
+### Components
 
-Components will appear in the item menu like this:  
-```xml
-<Manifest ID>.<Name in component succ>
-```
+Components are the structures players are given to create circuits in their creative ways.
+See the examples in:
+`LW/GameData/MHG/Components/`
 
-Using the example manifest above, and this example succ:
+Components will appear in the item menu as `<modID>.<componentId>` with both elements being substituted out for their represented data.
+
+Here is an example compone
 ```succ
+# <mod>/components/<component>.succ
+
 exampleComponent:
     column: "Logic"
+	category
     prefab:
         blocks:
             - Standard
@@ -59,45 +81,38 @@ exampleComponent:
 ...
 ```
 
-The item would appear in-game as `exampleID.exampleComponent`
-
+The item from the `.succ` above would appear in-game as:
 ![exampleID.exampleComponent](https://user-images.githubusercontent.com/7610940/138955557-42657956-80c9-4778-9743-2ffcd2a55edf.png)
+___
+### Scripting
+Scripts are stored in the folders inside `<mod>/src/...` such as `client/`, `server/`, &  `shared/` folders.
 
-### `<mod>/src/server/<modname-component>.cs`
-
-This is where your component logic goes. It can contain other code too, and you can have multiple components defined in 1 file. If your file is big and you want to split it you can create multiple files but make sure to follow the format. But anything used in code referenced using logicCode in your succ file **MUST** be in here, the rest will not be loaded by the time the component types are compiled. You'll have to use reflection for anything external (so probably just accept the big file). You should prefix the filename with the same name as the mod folder so it's easier to find and delete when removing the mod
-
-If you want to use the full capabilities of of the component system (inputs, outputs, updating logic each server tick etc.) your component should extend LogicComponent from LogicWorld.Server.Circuitry.
-
-Here is an example:
+Here is an example for the example component above:
 ```cs
+// <mod>/src/server/exampleMod-exampleComponent.cs
+
 using LogicAPI.Server.Components;
+/* Required for LogicComponent Class */
 
 namespace exampleID
 {
-    public class exampleComponent : LogicComponent
-    {
-        protected override void DoLogicUpdate()
-        {
-            base.Outputs[0].On = base.Inputs[0].On;
-        }
-    }
+	public class exampleComponent : LogicComponent
+	{
+		protected override void DoLogicUpdate()
+		{
+			base.Outputs[0].On = base.Inputs[0].On;
+		}
+	}
 }
 ```
-And how to load the code you will need to create a new file and name it `Loader.cs` for example and put this code in it.
-```cs
-using LogicAPI.Server;
-using LogicLog;
 
-public class Loader : ServerMod {
-    protected override void Initialize() {
-        Logger.Info("mod initialized");
-    }
-}
-```
-That is how your mod will be loaded.
+This example simply sets the single output to the single input each time the component is updated by 
+More info on [LogicComponent](CS-LogicComponent.md).
 
-This example simply sets the single output to the single input each time the server ticks. More info on [LogicComponent](CS-LogicComponent.md) and its features coming soon™
+> ### **NOTE**
+> Anything used in code referenced using logicCode in your succ file **MUST** be in here, the rest will not be loaded by the time the component types are compiled. You'll have to use reflection for anything external (so probably just accept the big file). You should prefix the filename with the same name as the mod folder so it's easier to find and delete when removing the mod
+___
+#### `<mod>/ignore`
+If this file is present, the mod will not be loaded. This is useful if you want to keep a mod downloaded, but not installed.
 
-### `<mod>/ignore`
-If this file is present, the mod will not be loaded.
+When adding or removing the `ignore` file, you just have to reload the world or restart the server.

@@ -1,5 +1,13 @@
 # ComponentClientCode
 
+> ### NOTE
+> This section is in a rough state, the subject still needs refining in paradigm by the modding community.
+
+> ### Todo
+> 1. Find out where this is located in the *fs* of LogicWorld.
+> 2. Gather relevant information.
+> 3. Prettify!
+
 ## Fields
 
 ### `Component => ComponentDataManager: IComponentInWorld`
