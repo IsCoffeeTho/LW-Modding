@@ -1,6 +1,9 @@
 # `class` PegAddress
 > ###### Location: `LW/Logic_World_Data/Managed/LogicAPI.dll` : `LogicAPI.Data` > `PegAddress`
 
+> ### NOTE
+> This section is very much **INCOMPLETE**.
+
 ```cs
 // Fields
 public ComponentAddress ComponentAddress { get; }
