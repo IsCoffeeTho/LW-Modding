@@ -1,10 +1,16 @@
 # C\# Script - Reference
-### Contents
-- [Components](#components)
-___
+
 ### Components
-- [LogicComponent](Reference/CS-LogicComponent.md)
-- [InputPeg](Reference/CS-InputPeg.md)
-- [OutputPeg](Reference/CS-OutputPeg.md)
+[`class` LogicComponent](Reference/CS-LogicComponent.md)
+#### Meta
+[ComponentData](Reference/CS-ComponentData.md)
+
+[ComponentAddress](Reference/CS-ComponentAddress.md)
 ___
-`Create what you love.`
+### Pegs
+[`interface` IPeg](Reference/CS-IPeg.md)
+
+[`interface` IInputPeg](Reference/CS-InputPeg.md)
+
+[`interface` IOutputPeg](Reference/CS-OutputPeg.md)
+___

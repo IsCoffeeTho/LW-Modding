@@ -1,4 +1,5 @@
 # ComponentClientCode
+> ###### Location: Unknown
 
 > ### NOTE
 > This section is in a rough state, the subject still needs refining in paradigm by the modding community.
